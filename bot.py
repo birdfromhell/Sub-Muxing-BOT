@@ -114,7 +114,7 @@ async def start_handler(c: Client, m: Message):
 		)
 		return
 	res = await m.reply_text(
-		text=f"Hi **{m.from_user.first_name}**\n\n ⚡ Saya Adalah Bot untuk Merger Video/File \n\n😎 Saya Bisa Mengabungkan File/Video Dan Mengabungkan Subtitle ke Video(softmux)!, Dan Mengupload ny ke telgram Atau Google Drive\n\n**Owner: 🈲 @{Config.OWNER_USERNAME}** ",
+		text=f"Hi **{m.from_user.first_name}**\n\n⚡ Saya Adalah Bot Merger \n\n😎 Saya Bisa Mengabungkan File/Video Atau Mengabungkan Subtitle ke Video(softmux), Dan Mengupload nya ke telgram Atau Google Drive\n\n**Owner: 🈲 @{Config.OWNER_USERNAME}** ",
 		quote=True
 	)
 
@@ -157,7 +157,7 @@ async def video_handler(c: Client, m: Message):
 
 		button = await MakeButtons(c,m,queueDB)
 		button.remove([InlineKeyboardButton("🔗 Merge Sekarang", callback_data="merge")])
-		button.remove([InlineKeyboardButton("💥 Clear Files", callback_data="cancel")])
+		button.remove([InlineKeyboardButton("💥 Hapus Files", callback_data="cancel")])
 
 		button.append([InlineKeyboardButton("🔗 Merge Subtitles", callback_data="mergeSubtitles")])
 		button.append([InlineKeyboardButton("💥 Hapus Files", callback_data="cancel")])
