@@ -1,14 +1,14 @@
 {
 	"name": "Telegram Video Merge Bot",
-	"description": "A Telegram Video Merge Bot in Pyrogram by @YashOswalYO",
+	"description": "A Telegram Video Merge Bot in Pyrogram by @BIRD_from_HELL",
 	"keywords": [
 		"telegram",
 		"video",
 		"merge",
 		"bot"
 	],
-	"repository": "https://github.com/yashoswalyo/MERGE-BOT",
-	"website": "https://telegram.dog/yashoswalyo",
+	"repository": "https://github.com/birdfromhell/Sub-Muxing-BOT",
+	"website": "https://telegram.dog/BIRD_from_HELL",
 	"stack": "heroku-20",
 	"env": {
 		"API_ID": {
