@@ -12,14 +12,14 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 
 	if cb.data == 'merge':
 		await cb.message.edit(
-			text='Where do you want to upload?',
+			text='Dimana kamu ingin Mengupload Filenya ?',
 			reply_markup=InlineKeyboardMarkup(
 				[
 					[
-						InlineKeyboardButton('📤 To Telegram', callback_data = 'to_telegram'),
-						InlineKeyboardButton('🌫️ To Drive', callback_data = 'to_drive')
+						InlineKeyboardButton('📤 Di Telegram', callback_data = 'to_telegram'),
+						InlineKeyboardButton('🌫️ Di Drive', callback_data = 'to_drive')
 					],
-					[InlineKeyboardButton("⛔ Cancel ⛔", callback_data="cancel")]
+					[InlineKeyboardButton("⛔ Batal ⛔", callback_data="cancel")]
 				]
 			)
 		)
@@ -28,14 +28,14 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 	elif cb.data == "mergeSubtitles":
 		UPLOAD_TO_DRIVE.update({f'{cb.from_user.id}':False})
 		await cb.message.edit(
-			text='How do yo want to upload file',
+			text='Sebagai apa File akan Diupload ?',
 			reply_markup=InlineKeyboardMarkup(
 				[
 					[
 						InlineKeyboardButton('🎞️ Video', callback_data='videoS'),
 						InlineKeyboardButton('📁 File', callback_data='documentS')
 					],
-					[InlineKeyboardButton("⛔ Cancel ⛔", callback_data="cancel")]
+					[InlineKeyboardButton("⛔ Batal ⛔", callback_data="cancel")]
 				]
 			)
 		)
@@ -46,7 +46,7 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 			urc = await database.getUserRcloneConfig(cb.from_user.id)
 			await c.download_media(message=urc,file_name=f"userdata/{cb.from_user.id}/rclone.conf")
 		except Exception as err:
-			await cb.message.reply_text("Rclone not Found, Unable to upload to drive")
+			await cb.message.reply_text("Rclone Config Tidak di temukan, Gagal Mengupload Ke drive")
 		if os.path.exists(f"userdata/{cb.from_user.id}/rclone.conf") is False:
 			await cb.message.delete()
 			await delete_all(root=f"downloads/{cb.from_user.id}/")
@@ -55,14 +55,14 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 			return
 		UPLOAD_TO_DRIVE.update({f'{cb.from_user.id}':True})
 		await cb.message.edit(
-			text="Okay I'll upload to drive\nDo you want to rename? Default file name is **[@yashoswalyo]_merged.mkv**",
+			text="Okay Saya Akan Menguploadnya Ke Drive\nApakah kamu Ingin Mengganti Nama File?, Default file name is **[@Submergevid_bot]_merged.mkv**",
 			reply_markup=InlineKeyboardMarkup(
 				[
 					[
 						InlineKeyboardButton('👆 Default', callback_data='rename_NO'),
 						InlineKeyboardButton('✍️ Rename', callback_data='rename_YES')
 					],
-					[InlineKeyboardButton("⛔ Cancel ⛔", callback_data="cancel")]
+					[InlineKeyboardButton("⛔ Batal ⛔", callback_data="cancel")]
 				]
 			)
 		)
@@ -71,14 +71,14 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 	elif cb.data == 'to_telegram':
 		UPLOAD_TO_DRIVE.update({f'{cb.from_user.id}':False})
 		await cb.message.edit(
-			text='How do yo want to upload file',
+			text='Sebagai apa File akan Diupload ?',
 			reply_markup=InlineKeyboardMarkup(
 				[
 					[
 						InlineKeyboardButton('🎞️ Video', callback_data='video'),
 						InlineKeyboardButton('📁 File', callback_data='document')
 					],
-					[InlineKeyboardButton("⛔ Cancel ⛔", callback_data="cancel")]
+					[InlineKeyboardButton("⛔ Batal ⛔", callback_data="cancel")]
 				]
 			)
 		)
@@ -87,14 +87,14 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 	elif cb.data == 'document':
 		UPLOAD_AS_DOC.update({f'{cb.from_user.id}':True})
 		await cb.message.edit(
-			text='Do you want to rename? Default file name is **[@yashoswalyo]_merged.mkv**',
+			text='Apakah kamu Ingin Mengganti Nama File? Default file name is **[@Mustaxproect]_merged.mkv**',
 			reply_markup=InlineKeyboardMarkup(
 				[
 					[
 						InlineKeyboardButton('👆 Default', callback_data='rename_NO'),
 						InlineKeyboardButton('✍️ Rename', callback_data='rename_YES')
 					],
-					[InlineKeyboardButton("⛔ Cancel ⛔", callback_data="cancel")]
+					[InlineKeyboardButton("⛔ Batal ⛔", callback_data="cancel")]
 				]
 			)
 		)
@@ -103,14 +103,14 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 	elif cb.data == 'video':
 		UPLOAD_AS_DOC.update({f'{cb.from_user.id}':False})
 		await cb.message.edit(
-			text='Do you want to rename? Default file name is **[@yashoswalyo]_merged.mkv**',
+			text='Apakah kamu Ingin Mengganti Nama File? Default file name is **[@MustaxProject]_merged.mkv**',
 			reply_markup=InlineKeyboardMarkup(
 				[
 					[
 						InlineKeyboardButton('👆 Default', callback_data='rename_NO'),
 						InlineKeyboardButton('✍️ Rename', callback_data='rename_YES')
 					],
-					[InlineKeyboardButton("⛔ Cancel ⛔", callback_data="cancel")]
+					[InlineKeyboardButton("⛔ Batal ⛔", callback_data="cancel")]
 				]
 			)
 		)
@@ -119,14 +119,14 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 	elif cb.data == 'documentS':
 		UPLOAD_AS_DOC.update({f'{cb.from_user.id}':True})
 		await cb.message.edit(
-			text='Do you want to rename? Default file name is **[@yashoswalyo]_softmuxed_video.mkv**',
+			text='Apakah kamu Ingin Mengganti Nama File? Default file name is **[@Mustaxproect]_softmuxed_video.mkv**',
 			reply_markup=InlineKeyboardMarkup(
 				[
 					[
 						InlineKeyboardButton('👆 Default', callback_data='renameS_NO'),
 						InlineKeyboardButton('✍️ Rename', callback_data='renameS_YES')
 					],
-					[InlineKeyboardButton("⛔ Cancel ⛔", callback_data="cancel")]
+					[InlineKeyboardButton("⛔ Batal ⛔", callback_data="cancel")]
 				]
 			)
 		)
@@ -135,14 +135,14 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 	elif cb.data == 'videoS':
 		UPLOAD_AS_DOC.update({f'{cb.from_user.id}':False})
 		await cb.message.edit(
-			text=f"Do you want to rename? Default file name is **[@yashoswalyo]_softmuxed_video.mkv**",
+			text=f"Apakah kamu Ingin Mengganti Nama File? Default file name is **[@Mustaxproject]_softmuxed_video.mkv**",
 			reply_markup=InlineKeyboardMarkup(
 				[
 					[
 						InlineKeyboardButton('👆 Default', callback_data='renameS_NO'),
 						InlineKeyboardButton('✍️ Rename', callback_data='renameS_YES')
 					],
-					[InlineKeyboardButton("⛔ Cancel ⛔", callback_data="cancel")]
+					[InlineKeyboardButton("⛔ Batal ⛔", callback_data="cancel")]
 				]
 			)
 		)
@@ -164,7 +164,7 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 	elif cb.data.startswith('rename_'):
 		if 'YES' in cb.data:
 			await cb.message.edit(
-				'Current filename: **[@yashoswalyo]_merged.mkv**\n\nSend me new file name without extension: You have 1 minute',
+				'Current filename: **[@yashoswalyo]_merged.mkv**\n\nKirim Saya Nama file Baru Tanpa extension: Kamu Punya 1 Menit',
 				parse_mode='markdown'
 			)
 			res: Message = await c.listen( cb.message.chat.id,filters=filters.text, timeout=60 )
@@ -174,12 +174,12 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 				await mergeNow(c,cb,new_file_name)
 			return
 		if 'NO' in cb.data:
-			await mergeNow(c,cb,new_file_name = f"./downloads/{str(cb.from_user.id)}/[@yashoswalyo]_merged.mkv")
+			await mergeNow(c,cb,new_file_name = f"./downloads/{str(cb.from_user.id)}/[@Mustaxproject]_merged.mkv")
 
 	elif cb.data.startswith('renameS_'):
 		if 'YES' in cb.data:
 			await cb.message.edit(
-				'Current filename: **[@yashoswalyo]_softmuxed_video.mkv**\n\nSend me new file name without extension: You have 1 minute ',
+				'Current filename: **[@Mustaxproject]_softmuxed_video.mkv**\n\nKirim Saya Nama file Baru Tanpa extension: Kamu Punya 1 Menit',
 				parse_mode='markdown'
 			)
 			res: Message = await c.listen( cb.message.chat.id,filters=filters.text, timeout=300 )
@@ -188,13 +188,13 @@ async def cb_handler(c: Client, cb: CallbackQuery):
 				await res.delete(True)
 				await mergeSub(c,cb,new_file_name)
 		if 'NO' in cb.data:
-			await mergeSub(c,cb,new_file_name = f"./downloads/{str(cb.from_user.id)}/[@yashoswalyo]_softmuxed_video.mkv")
+			await mergeSub(c,cb,new_file_name = f"./downloads/{str(cb.from_user.id)}/[@Mustaxproject]_softmuxed_video.mkv")
 
 	elif cb.data == 'cancel':
 		await delete_all(root=f"downloads/{cb.from_user.id}/")
 		queueDB.update({cb.from_user.id: {'videos':[],'subtitles':[]}})
 		formatDB.update({cb.from_user.id: None})
-		await cb.message.edit("Sucessfully Cancelled")
+		await cb.message.edit("Berhasil Di Batalkan")
 		await asyncio.sleep(5)
 		await cb.message.delete(True)
 		return

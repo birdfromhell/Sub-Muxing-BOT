@@ -96,7 +96,7 @@ async def mergeNow(c:Client, cb:CallbackQuery,new_file_name: str):
 		if vid_list[i] not in _cache:
 			_cache.append(vid_list[i])
 	vid_list = _cache
-	await cb.message.edit(f"🔀 Trying to merge videos ...")
+	await cb.message.edit(f"🔀 Mencoba Untuk Mengabungkan Video ...")
 	with open(input_,'w') as _list:
 		_list.write("\n".join(vid_list))
 	merged_video_path = await MergeVideo(
@@ -106,20 +106,20 @@ async def mergeNow(c:Client, cb:CallbackQuery,new_file_name: str):
 		format_='mkv'
 	)
 	if merged_video_path is None:
-		await cb.message.edit("❌ Failed to merge video !")
+		await cb.message.edit("❌ Gagal Mengabungkan Video !")
 		await delete_all(root=f'./downloads/{str(cb.from_user.id)}')
 		queueDB.update({cb.from_user.id: {"videos":[],"subtitles":[]}})
 		formatDB.update({cb.from_user.id: None})
 		return
 	try:
-		await cb.message.edit("✅ Sucessfully Merged Video !")
+		await cb.message.edit("✅ Berhasil Mengabungkan Video !")
 	except MessageNotModified:
-		await cb.message.edit("Sucessfully Merged Video ! ✅")
+		await cb.message.edit("Berhasil Mengabungkan Video ! ✅")
 	print(f"Video merged for: {cb.from_user.first_name} ")
 	time.sleep(3)
 	file_size = os.path.getsize(merged_video_path)
 	os.rename(merged_video_path,new_file_name)
-	await cb.message.edit(f"🔄 Renamed Merged Video to\n **{new_file_name.rsplit('/',1)[-1]}**")
+	await cb.message.edit(f"🔄 Nama File Sedang Diganti ke\n **{new_file_name.rsplit('/',1)[-1]}**")
 	time.sleep(2)
 	merged_video_path = new_file_name
 	if UPLOAD_TO_DRIVE[f'{cb.from_user.id}']:
@@ -129,7 +129,7 @@ async def mergeNow(c:Client, cb:CallbackQuery,new_file_name: str):
 		formatDB.update({cb.from_user.id: None})
 		return
 	if file_size > 2044723200:
-		await cb.message.edit("Video is Larger than 2GB Can't Upload")
+		await cb.message.edit("Video Terlalu Besar(2GB) Untu k Di Upload Ke Telegram")
 		await delete_all(root=f'./downloads/{str(cb.from_user.id)}')
 		queueDB.update({cb.from_user.id: {"videos":[],"subtitles":[]}})
 		formatDB.update({cb.from_user.id: None})

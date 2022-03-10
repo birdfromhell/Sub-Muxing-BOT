@@ -52,8 +52,8 @@ async def mergeSub(c:Client,cb:CallbackQuery,new_file_name:str):
 			)
 			if gDict[cb.message.chat.id] and cb.message.message_id in gDict[cb.message.chat.id]:
 				return
-			await cb.message.edit(f"Downloaded Sucessfully ... `{media.file_name}`")
-			print(f"Downloaded Sucessfully ... {media.file_name}")
+			await cb.message.edit(f"Berhasil Di Download ... `{media.file_name}`")
+			print(f"Berhasil Di Download ... {media.file_name}")
 			time.sleep(4)
 		except Exception as downloadErr:
 			print(f"Failed to download Error: {downloadErr}")
@@ -67,24 +67,24 @@ async def mergeSub(c:Client,cb:CallbackQuery,new_file_name:str):
 	subbed_video = await MergeSubNew(filePath=vid_list[0], subPath=vid_list[1],user_id=cb.from_user.id, file_list=vid_list)
 	_cache = list()
 	if subbed_video is None:
-		await cb.message.edit("❌ Failed to add subs video !")
+		await cb.message.edit("❌ Gagal Menambahkan Subs ke video !")
 		await delete_all(root=f'./downloads/{str(cb.from_user.id)}')
 		queueDB.update({cb.from_user.id: {'videos':[],'subtitles':[]}})
 		formatDB.update({cb.from_user.id: None})
 		return
 	try:
-		await cb.message.edit("✅ Sucessfully Muxed Video !")
+		await cb.message.edit("✅ Video Berhasil Di Gabung  Dengan Subtitle !")
 	except MessageNotModified:
-		await cb.message.edit("Sucessfully Muxed Video ! ✅")
-	print(f"Video muxed for: {cb.from_user.first_name} ")
+		await cb.message.edit("Video Berhasil Di Gabung  Dengan Subtitle✅")
+	print(f"Video muxed Untuk: {cb.from_user.first_name} ")
 	time.sleep(3)
 	file_size = os.path.getsize(subbed_video)
 	os.rename(subbed_video,new_file_name)
-	await cb.message.edit(f"🔄 Renaming Video to\n **{new_file_name.rsplit('/',1)[-1]}**")
+	await cb.message.edit(f"🔄 Nama File Sedang Diganti ke\n **{new_file_name.rsplit('/',1)[-1]}**")
 	time.sleep(2)
 	merged_video_path = new_file_name
 	if file_size > 2044723200:
-		await cb.message.edit("Video is Larger than 2GB Can't Upload")
+		await cb.message.edit("Video Terlalu Besar(2GB) Untu k Di Upload Ke Telegram")
 		await delete_all(root=f'./downloads/{str(cb.from_user.id)}')
 		queueDB.update({cb.from_user.id: {'videos':[],'subtitles':[]}})
 		formatDB.update({cb.from_user.id: None})
@@ -126,7 +126,7 @@ async def mergeSub(c:Client,cb:CallbackQuery,new_file_name:str):
 		await delete_all(root=f'./downloads/{str(cb.from_user.id)}')
 		queueDB.update({cb.from_user.id: {'videos':[],'subtitles':[]}})
 		formatDB.update({cb.from_user.id: None})
-		await cb.message.edit("⭕ Merged Video is corrupted \n\n<i>Try setting custom thumbnail</i>",parse_mode='html')
+		await cb.message.edit("⭕ Merged Video is corrupted \n\n<i>Coba Setting Custom Thumbnail</i>",parse_mode='html')
 		return
 	await uploadVideo(
 		c=c,

@@ -42,7 +42,7 @@ async def uploadVideo(c: Client,cb: CallbackQuery,merged_video_path,width,height
 			)
 	except Exception as err:
 		print(err)
-		await cb.message.edit("Failed to upload")
+		await cb.message.edit("Gagal mengupload")
 	if sent_ is not None:
 		if Config.LOGCHANNEL is not None:
 			media = sent_.video or sent_.document
