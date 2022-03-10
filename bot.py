@@ -40,7 +40,7 @@ if os.path.exists('./downloads') == False:
 async def allowUser(c:Client, m: Message):
 	if await database.allowedUser(uid=m.from_user.id) is True:
 		await m.reply_text(
-			text=f"**Login passed ✅,**\n  ⚡ Now you can you me!!",
+			text=f"**Login Berhasil ✅,**\n  ⚡ Sekarang Kamu Bisa Mengunnakan Saya!!",
 			quote=True
 		)
 	else:
@@ -48,12 +48,12 @@ async def allowUser(c:Client, m: Message):
 		if passwd == Config.PASSWORD:
 			await database.allowUser(uid=m.from_user.id)
 			await m.reply_text(
-				text=f"**Login passed ✅,**\n  ⚡ Now you can you me!!",
+				text=f"**Login Berhasil ✅,**\n  ⚡ Sekarang Kamu Bisa Menggunakan Saya!!",
 				quote=True
 			)
 		else:
 			await m.reply_text(
-				text=f"**Login failed ❌,**\n  🛡️ Unfortunately you can't use me\n\nContact: 🈲 @{Config.OWNER_USERNAME}",
+				text=f"**Login Gagal ❌,**\n  🛡️ Kamu Tidak Bisa Mengunakan saya \n\nContact: 🈲 @{Config.OWNER_USERNAME}",
 				quote=True
 			)
 	return
@@ -100,7 +100,7 @@ async def broadcast_handler(c:Client, m:Message):
 		print(f"Message sent to {userList[i]['name']} ")
 		await asyncio.sleep(2)
 	await m.reply_text(
-		text="🤓 __Broadcast completed sucessfully__",
+		text="🤓 __Broadcast Berhasil__",
 		quote=True
 	)
 
@@ -109,12 +109,12 @@ async def start_handler(c: Client, m: Message):
 	await database.addUser(uid=m.from_user.id,fname=m.from_user.first_name, lname=m.from_user.last_name)
 	if await database.allowedUser(uid=m.from_user.id) is False:
 		res = await m.reply_text(
-			text=f"Hi **{m.from_user.first_name}**\n\n 🛡️ Unfortunately you can't use me\n\n**Contact: 🈲 @{Config.OWNER_USERNAME}** ",
+			text=f"Hi **{m.from_user.first_name}**\n\n 🛡️ Kamu Tidak Bisa Mengunakan Saya\n\n**Contact: 🈲 @{Config.OWNER_USERNAME}** ",
 			quote=True
 		)
 		return
 	res = await m.reply_text(
-		text=f"Hi **{m.from_user.first_name}**\n\n ⚡ I am a file/video merger bot\n\n😎 I can merge Telegram files!, And upload it to telegram\n\n**Owner: 🈲 @{Config.OWNER_USERNAME}** ",
+		text=f"Hi **{m.from_user.first_name}**\n\n ⚡ Saya Adalah Bot untuk Merger Video/File \n\n😎 Saya Bisa Mengabungkan File/Video Dan Mengabungkan Subtitle ke Video(softmux)!, Dan Mengupload ny ke telgram Atau Google Drive\n\n**Owner: 🈲 @{Config.OWNER_USERNAME}** ",
 		quote=True
 	)
 
@@ -123,22 +123,22 @@ async def start_handler(c: Client, m: Message):
 async def video_handler(c: Client, m: Message):
 	if await database.allowedUser(uid=m.from_user.id) is False:
 		res = await m.reply_text(
-			text=f"Hi **{m.from_user.first_name}**\n\n 🛡️ Unfortunately you can't use me\n\n**Contact: 🈲 @{Config.OWNER_USERNAME}** ",
+			text=f"Hi **{m.from_user.first_name}**\n\n 🛡️ Kamu Tidak Bisa Mengunakan Saya\n\n**Contact: 🈲 @{Config.OWNER_USERNAME}** ",
 			quote=True
 		)
 		return
 	input_ = f"downloads/{str(m.from_user.id)}/input.txt"
 	if os.path.exists(input_):
-		await m.reply_text("Sorry Bro,\nAlready One process in Progress!\nDon't Spam.")
+		await m.reply_text("Maaf 🙏,\nSatu Proses Sedang Di Kerjakan!\n🤬JANGAN SPAM.")
 		return
 	media = m.video or m.document
 	currentFileNameExt = media.file_name.rsplit(sep='.')[-1].lower()
 	if media.file_name is None:
-		await m.reply_text('File Not Found')
+		await m.reply_text('File Tidak Ditemukan 🤔')
 		return
 	if media.file_name.rsplit(sep='.')[-1].lower() in 'conf':
 		await m.reply_text(
-			text="**💾 Config file found, Do you want to save it?**",
+			text="**💾 Rclone Config file Terdeteksi, Apakah kamu Mau Menyimpan Ini?**",
 			reply_markup = InlineKeyboardMarkup(
 				[
 					[
@@ -156,13 +156,13 @@ async def video_handler(c: Client, m: Message):
 		queueDB.get(m.from_user.id)['subtitles'].append(None)
 
 		button = await MakeButtons(c,m,queueDB)
-		button.remove([InlineKeyboardButton("🔗 Merge Now", callback_data="merge")])
+		button.remove([InlineKeyboardButton("🔗 Merge Sekarang", callback_data="merge")])
 		button.remove([InlineKeyboardButton("💥 Clear Files", callback_data="cancel")])
 
 		button.append([InlineKeyboardButton("🔗 Merge Subtitles", callback_data="mergeSubtitles")])
-		button.append([InlineKeyboardButton("💥 Clear Files", callback_data="cancel")])
+		button.append([InlineKeyboardButton("💥 Hapus Files", callback_data="cancel")])
 		await m.reply_text(
-			text="You send a subtitle file. Do you want to merge it?",
+			text="Kamu Mengirim File subtitle. Apakah Kamu Mau Mengabungkan Ini?",
 			quote=True,
 			reply_markup= InlineKeyboardMarkup(button)
 		)
@@ -175,10 +175,10 @@ async def video_handler(c: Client, m: Message):
 		await m.reply_text(f"First you sent a {formatDB.get(m.from_user.id).upper()} file so now send only that type of file.", quote=True)
 		return
 	if currentFileNameExt not in ['mkv','mp4','webm']:
-		await m.reply_text("This Video Format not Allowed!\nOnly send MP4 or MKV or WEBM.", quote=True)
+		await m.reply_text("Format Video  Ini Tidak Dibolehkan!\nHanya Boleh MP4 atau MKV atau WEBM.", quote=True)
 		return
-	editable = await m.reply_text("Please Wait ...", quote=True)
-	MessageText = "Okay,\nNow Send Me Next Video or Press **Merge Now** Button!"
+	editable = await m.reply_text("Harap Tunggu...", quote=True)
+	MessageText = "Okay,\nSekarang Kirim Video/Subtitle Selanjutnya atau Tekan Tombol **Merge Now**!"
 	if queueDB.get(m.from_user.id, None) is None:
 		queueDB.update({m.from_user.id: {'videos':[],'subtitles':[]}})
 	if (len(queueDB.get(m.from_user.id)['videos']) >= 0) and (len(queueDB.get(m.from_user.id)['videos'])<10 ):
@@ -187,7 +187,7 @@ async def video_handler(c: Client, m: Message):
 		print(queueDB.get(m.from_user.id)['videos'], queueDB.get(m.from_user.id)['subtitles'])
 		if len(queueDB.get(m.from_user.id)['videos']) == 1:
 			await editable.edit(
-				'**Send me some more videos to merge them into single file**',parse_mode='markdown'
+				'**Kirim Beberapa File Untuk Digabungkan Menjadi Satu**',parse_mode='markdown'
 			)
 			return
 		if queueDB.get(m.from_user.id, None)['videos'] is None:
@@ -195,7 +195,7 @@ async def video_handler(c: Client, m: Message):
 		if replyDB.get(m.from_user.id, None) is not None:
 			await c.delete_messages(chat_id=m.chat.id, message_ids=replyDB.get(m.from_user.id))
 		if len(queueDB.get(m.from_user.id)['videos']) == 10:
-			MessageText = "Okay Unkil, Now Just Press **Merge Now** Button Plox!"
+			MessageText = "Okay, Sekarang Tekan Tombol **Merge Now** !!"
 		markup = await MakeButtons(c, m, queueDB)
 		reply_ = await editable.edit(
 			text=MessageText,
@@ -205,7 +205,7 @@ async def video_handler(c: Client, m: Message):
 	elif len(queueDB.get(m.from_user.id)['videos']) > 10:
 		markup = await MakeButtons(c,m,queueDB)
 		await editable.text(
-			"Max 10 videos allowed",
+			"Hanya 10 Video di Perbolehkan",
 			reply_markup=InlineKeyboardMarkup(markup)
 		)
 
@@ -213,12 +213,12 @@ async def video_handler(c: Client, m: Message):
 async def photo_handler(c: Client,m: Message):
 	if await database.allowedUser(uid=m.from_user.id) is False:
 		res = await m.reply_text(
-			text=f"Hi **{m.from_user.first_name}**\n\n 🛡️ Unfortunately you can't use me\n\n**Contact: 🈲 @{Config.OWNER_USERNAME}** ",
+			text=f"Hi **{m.from_user.first_name}**\n\n 🛡️ Kamu Tidak Bisa Mengunakan Saya\n\n**Contact: 🈲 @{Config.OWNER_USERNAME}** ",
 			quote=True
 		)
 		return
 	thumbnail = m.photo.file_id
-	msg = await m.reply_text('Saving Thumbnail. . . .',quote=True)
+	msg = await m.reply_text('Menyimpan Thumbnail. . . .',quote=True)
 	await database.saveThumb(m.from_user.id,thumbnail)
 	LOCATION = f'./downloads/{m.from_user.id}_thumb.jpg'
 	await c.download_media(
@@ -226,24 +226,24 @@ async def photo_handler(c: Client,m: Message):
 		file_name=LOCATION
 	)
 	await msg.edit_text(
-		text="✅ Custom Thumbnail Saved!"
+		text="✅ Custom Thumbnail Disimpan!"
 	)
 
 @mergeApp.on_message(filters.command(['help']) & filters.private & ~filters.edited)
 async def help_msg(c: Client, m: Message):
 	await m.reply_text(
-		text='''**Follow These Steps:
+		text='''**Ikuti Langkah Ini:
 
-1) Send me the custom thumbnail (optional).
-2) Send two or more Your Videos Which you want to merge
-3) After sending all files select merge options
-4) Select the upload mode.
-5) Select rename if you want to give custom file name else press default**''',
+1) Kirim Saya Foto Untuk menjadi Thumbnail (optional).
+2) Kirim 2 atau Lebih Video/Subtitle
+3) Setelah Mengirim Semua Silahkan Pilih opsi Merge
+4) Pilih Upload Mode.
+5) Pilih Rename Jika Kamu Ingin Mengganti Nama File atau Pilih tidak Untuk Default**''',
 		quote=True,
 		reply_markup=InlineKeyboardMarkup(
 			[
 				[
-					InlineKeyboardButton("Close 🔐", callback_data="close")
+					InlineKeyboardButton("Tutup 🔐", callback_data="close")
 				]
 			]
 		)
@@ -253,25 +253,23 @@ async def help_msg(c: Client, m: Message):
 async def about_handler(c:Client,m:Message):
 	await m.reply_text(
 		text='''
-- **WHAT'S NEW:**
-+ Upload to drive using your own rclone config
-+ Merged video preserves all streams of the first video you send (i.e. all audiotracks/subtitles)
+- **Whats New:**
++ Kamu Bisa Upload Ke Gdrive Mengunakan Rclone Config
 - **FEATURES:**
-+ Merge Upto 10 videos in one
-+ Upload as document/video
-+ Custom thumbnail support
-+ Users can login to bot using password
-+ Owner can broadcast message to all users
++ merger 1 Sampai 10 Video Menjadi Satu
++ Merger Subtitle Dengan Video (SoftSub)
++ Upload Sebagai document/video
++ Custom thumbnail Di Dukung
 		''',
 		quote=True,
 		reply_markup=InlineKeyboardMarkup(
 			[
 				[
-					InlineKeyboardButton("Developer", url="https://t.me/yashoswalyo")
+					InlineKeyboardButton("Developer", url="https://t.me/BIRD_from_HELL")
 				],
 				[
-					InlineKeyboardButton("Source Code", url="https://github.com/yashoswalyo/MERGE-BOT"),
-					InlineKeyboardButton("Deployed By", url=f"https://t.me/{Config.OWNER_USERNAME}")
+					InlineKeyboardButton("Source Code", url="https://soon"),
+					InlineKeyboardButton("more bots", url=f"https://t.me/mustaxproject")
 				]
 			]
 		)
@@ -284,11 +282,11 @@ async def show_thumbnail(c:Client ,m: Message):
 		LOCATION = f'./downloads/{m.from_user.id}_thumb.jpg'
 		await c.download_media(message=str(thumb_id),file_name=LOCATION)
 		if os.path.exists(LOCATION) is False:
-			await m.reply_text(text='❌ Custom thumbnail not found',quote=True)
+			await m.reply_text(text='❌ Custom thumbnail Tidak Di Temukan',quote=True)
 		else:
 			await m.reply_photo(photo=LOCATION, caption='🖼️ Your custom thumbnail', quote=True)
 	except Exception as err:
-		await m.reply_text(text='❌ Custom thumbnail not found',quote=True)
+		await m.reply_text(text='❌ Custom thumbnail Tidak Ditemukan',quote=True)
 
 
 @mergeApp.on_message(filters.command(['deletethumbnail']) & filters.private & ~filters.edited)
@@ -297,9 +295,9 @@ async def delete_thumbnail(c: Client,m: Message):
 		await database.delThumb(m.from_user.id)
 		if os.path.exists(f"downloads/{str(m.from_user.id)}"):
 			os.remove(f"downloads/{str(m.from_user.id)}")
-		await m.reply_text('✅ Deleted Sucessfully',quote=True)
+		await m.reply_text('✅ Thumbnail Berhasil Dihapus',quote=True)
 	except Exception as err:
-		await m.reply_text(text='❌ Custom thumbnail not found',quote=True)
+		await m.reply_text(text='❌ Custom thumbnail Tidak Di Temukan',quote=True)
 
 
 @mergeApp.on_callback_query()
@@ -310,11 +308,11 @@ async def showQueue(c:Client, cb: CallbackQuery):
 	try:
 		markup = await MakeButtons(c,cb.message,queueDB)
 		await cb.message.edit(
-			text="Okay,\nNow Send Me Next Video or Press **Merge Now** Button!",
+			text="Okay,\nSekarang Kirim Beberapa Video/Subtitle atau Tekan Tombol **Merge Now**!",
 			reply_markup=InlineKeyboardMarkup(markup)
 		)
 	except ValueError:
-		await cb.message.edit('Send Some more videos')
+		await cb.message.edit('Kirim Beberapa Video')
 	return
 
 async def delete_all(root):
@@ -332,7 +330,7 @@ async def MakeButtons(bot: Client, m: Message, db: dict):
 		else:
 			markup.append([InlineKeyboardButton(f"{media.file_name}", callback_data=f"showFileName_{i.message_id}")])
 	markup.append([InlineKeyboardButton("🔗 Merge Now", callback_data="merge")])
-	markup.append([InlineKeyboardButton("💥 Clear Files", callback_data="cancel")])
+	markup.append([InlineKeyboardButton("💥 Hapus Files", callback_data="cancel")])
 	return markup
 
 
