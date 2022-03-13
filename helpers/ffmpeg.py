@@ -18,7 +18,7 @@ async def MergeVideo(input_file: str, user_id: int, message: Message, format_: s
 	:param `format_`: Pass File Extension.
 	:return: This will return Merged Video File Path
 	"""
-	output_vid = f"downloads/{str(user_id)}/[@MustaxProect].{format_.lower()}"
+	output_vid = f"downloads/{str(user_id)}/[@MustaxProject].{format_.lower()}"
 	file_generator_command = [
 		"ffmpeg",
 		"-f",
@@ -83,8 +83,8 @@ async def MergeSub(filePath:str, subPath:str, user_id):
 	metadata += f"-metadata:s:s:{subTrack} title='Track {subTrack+1} - MergeBy@Submergevid_bot' "
 	subTrack +=1
 	print("Sub muxing")
-	subprocess.call(f"ffmpeg -hide_banner {input_files}-map 0:v:0 -map 0:a -map 0:s? {maps}{metadata}-c:v copy -c:a copy -c:s srt './downloads/{str(user_id)}/[@Submergevid_bot]_softmuxed_video.mkv' ",shell=True)
-	orgFilePath = shutil.move(f"./downloads/{str(user_id)}/[@Submergevid_bot]_softmuxed_video.mkv",filePath)
+	subprocess.call(f"ffmpeg -hide_banner {input_files}-map 0:v:0 -map 0:a -map 0:s? {maps}{metadata}-c:v copy -c:a copy -c:s srt './downloads/{str(user_id)}/[@MustaxProject]_softmuxed_video.mkv' ",shell=True)
+	orgFilePath = shutil.move(f"./downloads/{str(user_id)}/[@MustaxProject]_softmuxed_video.mkv",filePath)
 	return orgFilePath
 
 
@@ -117,8 +117,8 @@ async def MergeSubNew(filePath:str, subPath:str, user_id, file_list):
 		metadata += f"-metadata:s:s:{subTrack} title='Track {subTrack+1} - tg@Mustaxproject' "
 		subTrack +=1
 	print("Sub muxing")
-	subprocess.call(f"ffmpeg -hide_banner {input_files}-map 0:v:0 -map 0:a -map 0:s? {maps}{metadata}-c:v copy -c:a copy -c:s srt './downloads/{str(user_id)}/[@Submergevid_bot]_softmuxed_video.mkv'",shell=True)
-	return f'./downloads/{str(user_id)}/[@Submergevid_bot]_softmuxed_video.mkv'
+	subprocess.call(f"ffmpeg -hide_banner {input_files}-map 0:v:0 -map 0:a -map 0:s? {maps}{metadata}-c:v copy -c:a copy -c:s srt './downloads/{str(user_id)}/[@MustaxProject]_softmuxed_video.mkv'",shell=True)
+	return f'./downloads/{str(user_id)}/[@MustaxProject]_softmuxed_video.mkv'
 
 
 
